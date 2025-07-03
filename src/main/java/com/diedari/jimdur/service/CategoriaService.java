@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.diedari.jimdur.model.Categoria;
+import com.diedari.jimdur.model.business.Categoria;
 
 public interface CategoriaService {
     List<Categoria> obtenerTodasLasCategorias(); // Obtener todas las categorías
@@ -18,7 +18,7 @@ public interface CategoriaService {
 
     void eliminarCategoriaPorId(Long id); // Eliminar una categoría por ID
 
-    List<Categoria> obtenerCategoriaPorEstado(boolean activa); // Obtener una categoría por estado (activa/inactiva)
+    List<Categoria> obtenerCategoriaPorEstado(boolean activa); // Obtener una categoría por estado (activo/inactivo)
 
     List<Categoria> obtenerCategoriaPorNombre(String nombre); // Obtener una categoría por nombre
 

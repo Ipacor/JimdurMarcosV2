@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.diedari.jimdur.model.Marca;
+import com.diedari.jimdur.model.business.Marca;
 
 public interface MarcaService {
 

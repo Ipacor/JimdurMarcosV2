@@ -44,24 +44,24 @@
                                 <div class="mb-3">
                                     <label for="nombre" class="form-label">Nombre de la categoría <span
                                             class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="nombre" th:field="*{nombreCategoria}" required oninput="generarSlug()" >
+                                    <input type="text" class="form-control" id="nombre" th:field="*{nombre}" required oninput="generarSlug()" >
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="descripcion" class="form-label">Descripción</label>
                                     <textarea class="form-control" id="descripcion" rows="3"
-                                        th:field="*{descripcionCategoria}"></textarea>
+                                        th:field="*{descripcion}"></textarea>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="slug" class="form-label">Slug <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="slug" th:field="*{slugCategoria}" required readonly>
-                                    <div class="form-text">El slug se usa en las URLs. Ejemplo: /categoria/<span th:text="*{slugCategoria}">aceites</span></div>
+                                    <input type="text" class="form-control" id="slug" th:field="*{slug}" required readonly>
+                                    <div class="form-text">El slug se usa en las URLs. Ejemplo: /categoria/<span th:text="*{slug}">aceites</span></div>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="icono" class="form-label">Ícono de la categoría</label>
-                                    <select th:field="*{iconoCategoria}" class="form-select" id="icono">
+                                    <select th:field="*{icono}" class="form-select" id="icono">
                                         <option value="">Selecciona un ícono</option>
                                         <option value="bi-gear-fill">⚙️ Motor / Accesorios</option>
                                         <option value="bi-droplet-fill">💧 Aceites / Lubricantes</option>
@@ -90,7 +90,7 @@
 
                                 <div class="mb-3 form-check form-switch">
                                     <input class="form-check-input" type="checkbox" role="switch" id="activa"
-                                        th:field="*{estadoActiva}">
+                                        th:field="*{activo}">
                                     <label class="form-check-label" for="activa">Categoría activa</label>
                                 </div>
 

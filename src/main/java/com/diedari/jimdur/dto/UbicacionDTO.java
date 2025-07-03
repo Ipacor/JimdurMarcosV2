@@ -1,6 +1,5 @@
 package com.diedari.jimdur.dto;
 
-import com.diedari.jimdur.model.Ubicaciones.TipoUbicacion;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,5 +14,5 @@ public class UbicacionDTO {
     private String descripcion;
     private String codigo;
     private Integer capacidad;
-    private TipoUbicacion tipoUbicacion; // Tipo de ubicación
+    private String tipoUbicacion; // Tipo de ubicación
 }

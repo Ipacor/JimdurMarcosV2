@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.diedari.jimdur.model.Proveedor;
+import com.diedari.jimdur.model.business.Proveedor;
 
 public interface ProveedorService {
     

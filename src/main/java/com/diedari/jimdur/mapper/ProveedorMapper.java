@@ -2,9 +2,8 @@ package com.diedari.jimdur.mapper;
 
 import com.diedari.jimdur.dto.AgregarProveedorDTO;
 import com.diedari.jimdur.dto.DireccionProveedorDTO;
-import com.diedari.jimdur.model.DireccionProveedor;
-import com.diedari.jimdur.model.DireccionProveedor.TipoDireccion;
-import com.diedari.jimdur.model.Proveedor;
+import com.diedari.jimdur.model.business.DireccionProveedor;
+import com.diedari.jimdur.model.business.Proveedor;
 
 import java.util.Collections;
 import java.util.List;
@@ -37,32 +36,24 @@ public class ProveedorMapper {
         }
 
         Proveedor proveedor = Proveedor.builder()
-                .idProveedor(dto.getIdProveedor())
+                .id(dto.getIdProveedor())
                 .nombre(dto.getNombreEmpresa())
-                .nombreComercial(dto.getNombreComercial())
                 .ruc(dto.getRucEmpresa())
-                .tipoProveedor(dto.getTipoProveedor())
-                .estadoActivo(dto.getEstadoActivo())
-                .nombreContactoPrincipal(dto.getNombreContactoPrincipal())
-                .cargoContacto(dto.getCargoContacto())
                 .telefono(dto.getTelefonoContacto())
-                .correo(correo)
-                .sitioWebContacto(dto.getSitioWebContacto())
-                .horarioAtencionContacto(dto.getHorarioAtencionContacto())
+                .email(correo)
+                .activo("true".equalsIgnoreCase(dto.getEstadoActivo()))
                 .build();
 
         if (dto.getDirecciones() != null) {
             List<DireccionProveedor> direcciones = dto.getDirecciones().stream()
                     .map(d -> DireccionProveedor.builder()
-                            .idDireccionProveedor(d.getIdDireccionProveedor())
-                            .etiqueta(d.getEtiqueta())
+                            .id(d.getIdDireccionProveedor())
                             .calle(d.getCalle())
-                            .distrito(d.getDistrito())
                             .ciudad(d.getCiudad())
-                            .departamentoEstado(d.getDepartamentoEstado())
+                            .estado(d.getDepartamentoEstado())
                             .codigoPostal(d.getCodigoPostal())
                             .pais(d.getPais())
-                            .referencia(d.getReferencia())
+                            .numero(d.getDistrito())
                             .tipoDireccion(d.getTipoDireccion())
                             .proveedor(proveedor)
                             .build())
@@ -94,32 +85,24 @@ public class ProveedorMapper {
         }
 
         AgregarProveedorDTO dto = new AgregarProveedorDTO();
-        dto.setIdProveedor(proveedor.getIdProveedor());
+        dto.setIdProveedor(proveedor.getId());
         dto.setNombreEmpresa(proveedor.getNombre());
-        dto.setNombreComercial(proveedor.getNombreComercial());
         dto.setRucEmpresa(proveedor.getRuc());
-        dto.setTipoProveedor(proveedor.getTipoProveedor());
-        dto.setEstadoActivo(proveedor.getEstadoActivo());
-        dto.setNombreContactoPrincipal(proveedor.getNombreContactoPrincipal());
-        dto.setCargoContacto(proveedor.getCargoContacto());
         dto.setTelefonoContacto(proveedor.getTelefono());
-        dto.setEmailContacto(proveedor.getCorreo());
-        dto.setSitioWebContacto(proveedor.getSitioWebContacto());
-        dto.setHorarioAtencionContacto(proveedor.getHorarioAtencionContacto());
+        dto.setEmailContacto(proveedor.getEmail());
+        dto.setEstadoActivo(proveedor.getActivo() ? "true" : "false");
 
         if (proveedor.getDirecciones() != null) {
             List<DireccionProveedorDTO> direccionesDTO = proveedor.getDirecciones().stream()
                     .map(d -> {
                         DireccionProveedorDTO direccionDTO = new DireccionProveedorDTO();
-                        direccionDTO.setIdDireccionProveedor(d.getIdDireccionProveedor());
-                        direccionDTO.setEtiqueta(d.getEtiqueta());
+                        direccionDTO.setIdDireccionProveedor(d.getId());
                         direccionDTO.setCalle(d.getCalle());
-                        direccionDTO.setDistrito(d.getDistrito());
                         direccionDTO.setCiudad(d.getCiudad());
-                        direccionDTO.setDepartamentoEstado(d.getDepartamentoEstado());
+                        direccionDTO.setDepartamentoEstado(d.getEstado());
                         direccionDTO.setCodigoPostal(d.getCodigoPostal());
                         direccionDTO.setPais(d.getPais());
-                        direccionDTO.setReferencia(d.getReferencia());
+                        direccionDTO.setDistrito(d.getNumero());
                         direccionDTO.setTipoDireccion(d.getTipoDireccion());
                         return direccionDTO;
                     })

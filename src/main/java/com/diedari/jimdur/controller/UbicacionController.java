@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.diedari.jimdur.model.Ubicaciones;
+import com.diedari.jimdur.model.business.Ubicaciones;
 import com.diedari.jimdur.service.UbicacionService;
 
 @Controller

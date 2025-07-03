@@ -5,7 +5,11 @@ import com.diedari.jimdur.dto.EspecificacionProductoDTO;
 import com.diedari.jimdur.dto.ImagenProductoDTO;
 import com.diedari.jimdur.dto.ProductoDTO;
 import com.diedari.jimdur.dto.ProductoProveedorDTO;
-import com.diedari.jimdur.model.*;
+import com.diedari.jimdur.model.business.Producto;
+import com.diedari.jimdur.model.business.ProductoProveedor;
+import com.diedari.jimdur.model.business.EspecificacionProducto;
+import com.diedari.jimdur.model.business.CompatibilidadProducto;
+
 import com.diedari.jimdur.service.FileStorageService;
 import org.springframework.stereotype.Component;
 
@@ -41,13 +45,13 @@ public class ProductoMapper {
         // Mapear categoría
         if (producto.getCategoria() != null) {
             builder.idCategoria(producto.getCategoria().getId())
-                   .nombreCategoria(producto.getCategoria().getNombreCategoria());
+                   .nombreCategoria(producto.getCategoria().getNombre());
         }
 
         // Mapear marca
         if (producto.getMarca() != null) {
             builder.idMarca(producto.getMarca().getId())
-                   .nombreMarca(producto.getMarca().getNombreMarca());
+                   .nombreMarca(producto.getMarca().getNombre());
         }
 
         // Mapear imágenes

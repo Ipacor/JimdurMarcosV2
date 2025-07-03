@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.diedari.jimdur.dto.ProductoDTO;
 import com.diedari.jimdur.dto.ProductoProveedorDTO;
-import com.diedari.jimdur.model.Producto;
+import com.diedari.jimdur.model.business.Producto;
 
 public interface ProductoService {
 

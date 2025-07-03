@@ -1,7 +1,7 @@
 package com.diedari.jimdur.service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,8 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.diedari.jimdur.model.Proveedor;
-import com.diedari.jimdur.repository.ProveedorRepository;
+import com.diedari.jimdur.model.business.Proveedor;
+import com.diedari.jimdur.repository.business.ProveedorRepository;
 
 @Service
 public class ProveedorServiceImpl implements ProveedorService {
@@ -51,7 +51,10 @@ public class ProveedorServiceImpl implements ProveedorService {
 
     @Override
     public List<Proveedor> obtenerProveedoresActivos(String estadoActivo) {
-        return proveedorRepository.findByEstadoActivo(estadoActivo);
+        boolean activo = "Activo".equalsIgnoreCase(estadoActivo);
+        return proveedorRepository.findAll().stream()
+            .filter(p -> p.getActivo() != null && p.getActivo() == activo)
+            .collect(Collectors.toList());
     }
 
     @Override
@@ -61,25 +64,21 @@ public class ProveedorServiceImpl implements ProveedorService {
             String tipoProveedor,
             String estadoActivo,
             Pageable pageable) {
-        
-        // Primero obtenemos la página con los datos básicos
-        Page<Proveedor> proveedoresPage = proveedorRepository.findByFiltros(
-            nombreProveedor, tipoProveedor, estadoActivo, pageable);
-
-        // Si no hay resultados, retornamos la página vacía
-        if (proveedoresPage.isEmpty()) {
-            return proveedoresPage;
+        List<Proveedor> proveedores = proveedorRepository.findAll();
+        if (nombreProveedor != null && !nombreProveedor.isEmpty()) {
+            proveedores = proveedores.stream()
+                .filter(p -> p.getNombre() != null && p.getNombre().toLowerCase().contains(nombreProveedor.toLowerCase()))
+                .collect(Collectors.toList());
         }
-
-        // Obtenemos la lista de proveedores con sus relaciones
-        List<Proveedor> proveedoresConProductos = proveedorRepository.findProveedoresWithProductos(
-            new ArrayList<>(proveedoresPage.getContent()));
-
-        // Creamos una nueva página con los proveedores completos
-        return new PageImpl<>(
-            proveedoresConProductos, 
-            pageable, 
-            proveedoresPage.getTotalElements()
-        );
+        if (estadoActivo != null && !estadoActivo.isEmpty()) {
+            boolean activo = "Activo".equalsIgnoreCase(estadoActivo);
+            proveedores = proveedores.stream()
+                .filter(p -> p.getActivo() != null && p.getActivo() == activo)
+                .collect(Collectors.toList());
+        }
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), proveedores.size());
+        List<Proveedor> pageContent = proveedores.subList(start, end);
+        return new PageImpl<>(pageContent, pageable, proveedores.size());
     }
 }

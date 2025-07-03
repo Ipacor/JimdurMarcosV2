@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.diedari.jimdur.model.Proveedor;
+import com.diedari.jimdur.model.business.Proveedor;
 import com.diedari.jimdur.service.ProveedorService;
 
 @RestController
@@ -36,7 +36,7 @@ public class ProveedorRestController {
     // Actualizar proveedor existente
     @PutMapping("/{id}")
     public Proveedor actualizarProveedor(@PathVariable Long id, @RequestBody Proveedor proveedor) {
-        proveedor.setIdProveedor(id); // Aseguramos que se actualice el correcto
+        proveedor.setId(id); // Aseguramos que se actualice el correcto
         return proveedorService.actualizarProveedor(proveedor);
     }
 

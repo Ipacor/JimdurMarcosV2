@@ -2,14 +2,16 @@ package com.diedari.jimdur.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.diedari.jimdur.model.Categoria;
-import com.diedari.jimdur.repository.CategoriaRepository;
+import com.diedari.jimdur.model.business.Categoria;
+import com.diedari.jimdur.repository.business.CategoriaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Service
 public class CategoriaServiceImpl implements CategoriaService {
@@ -17,6 +19,7 @@ public class CategoriaServiceImpl implements CategoriaService {
     // Inyectar el repositorio de categoría
     private final CategoriaRepository categoriaRepository;
 
+    @Autowired
     public CategoriaServiceImpl(CategoriaRepository categoriaRepository) {
         this.categoriaRepository = categoriaRepository;
     }
@@ -49,39 +52,40 @@ public class CategoriaServiceImpl implements CategoriaService {
 
     @Override
     public List<Categoria> obtenerCategoriaPorEstado(boolean activa) {
-        return categoriaRepository.findByEstadoActiva(activa); 
+        return categoriaRepository.findAll().stream()
+                .filter(c -> c.getActivo() == activa)
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<Categoria> obtenerCategoriaPorNombre(String nombre) {
         if (nombre == null || nombre.isEmpty()) {
-            return categoriaRepository.findAll(); // Si no se proporciona un nombre, devuelve todas las categorías   
+            return categoriaRepository.findAll();
         }
-        return categoriaRepository.findByNombreCategoria(nombre); 
+        return categoriaRepository.findAll().stream()
+                .filter(c -> c.getNombre() != null && c.getNombre().equalsIgnoreCase(nombre))
+                .collect(Collectors.toList());
     }
 
     @Override
     @Transactional(readOnly = true)
     public Page<Categoria> obtenerCategoriasFiltradas(String nombreCategoria, String estadoCategoria, Pageable pageable) {
-        // Si no hay filtros, retornar todas las categorías paginadas
-        if ((nombreCategoria == null || nombreCategoria.isEmpty()) && 
-            (estadoCategoria == null || estadoCategoria.isEmpty())) {
-            return categoriaRepository.findAll(pageable);
+        List<Categoria> categorias = categoriaRepository.findAll();
+        if (nombreCategoria != null && !nombreCategoria.isEmpty()) {
+            categorias = categorias.stream()
+                    .filter(c -> c.getNombre() != null && c.getNombre().toLowerCase().contains(nombreCategoria.toLowerCase()))
+                    .collect(Collectors.toList());
         }
-
-        // Si solo hay filtro por nombre
-        if (estadoCategoria == null || estadoCategoria.isEmpty()) {
-            return categoriaRepository.findByNombreCategoriaContainingIgnoreCase(nombreCategoria, pageable);
+        if (estadoCategoria != null && !estadoCategoria.isEmpty()) {
+            boolean activa = "activa".equalsIgnoreCase(estadoCategoria);
+            categorias = categorias.stream()
+                    .filter(c -> c.getActivo() == activa)
+                    .collect(Collectors.toList());
         }
-
-        // Si solo hay filtro por estado
-        if (nombreCategoria == null || nombreCategoria.isEmpty()) {
-            Boolean estado = "activa".equalsIgnoreCase(estadoCategoria);
-            return categoriaRepository.findByEstadoActiva(estado, pageable);
-        }
-
-        // Si hay ambos filtros
-        Boolean estado = "activa".equalsIgnoreCase(estadoCategoria);
-        return categoriaRepository.findByNombreCategoriaContainingIgnoreCaseAndEstadoActiva(nombreCategoria, estado, pageable);
+        // paginar manualmente
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), categorias.size());
+        List<Categoria> pageContent = categorias.subList(start, end);
+        return new org.springframework.data.domain.PageImpl<>(pageContent, pageable, categorias.size());
     }
 }

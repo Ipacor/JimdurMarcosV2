@@ -37,20 +37,20 @@
                             <!-- Campos del formulario -->
                             <div class="mb-3">
                                 <label for="nombreMarca" class="form-label required">Nombre de la marca</label>
-                                <input type="text" class="form-control" id="nombreMarca" th:field="*{nombreMarca}"
+                                <input type="text" class="form-control" id="nombreMarca" th:field="*{nombre}"
                                     placeholder="Ejemplo: Motul" required>
                             </div>
 
                             <div class="mb-3">
                                 <label for="descripcionMarca" class="form-label">Descripción</label>
-                                <textarea class="form-control" id="descripcionMarca" th:field="*{descripcionMarca}"
+                                <textarea class="form-control" id="descripcionMarca" th:field="*{descripcion}"
                                     placeholder="Ejemplo: Fabricante francés de lubricantes de alta calidad para motocicletas y automóviles"
                                     rows="3"></textarea>
                             </div>
 
                             <div class="mb-3">
                                 <label for="paisOrigen" class="form-label">País de origen</label>
-                                <input type="text" class="form-control" id="paisOrigen" th:field="*{paisOrigenMarca}"
+                                <input type="text" class="form-control" id="paisOrigen" th:field="*{paisOrigen}"
                                     placeholder="Ejemplo: Francia" required>
                             </div>
                         </div>
@@ -59,7 +59,7 @@
 
                             <div class="mb-3">
                                 <label for="sitioWeb" class="form-label">Sitio web</label>
-                                <input type="url" class="form-control" id="sitioWeb" th:field="*{sitioWebMarca}"
+                                <input type="url" class="form-control" id="sitioWeb" th:field="*{sitioWeb}"
                                     placeholder="Ejemplo: www.motul.com" required>
                             </div>
 
@@ -76,8 +76,8 @@
 
                             <div class="mt-4">
                                 <input class="form-check-input" type="checkbox" role="switch" id="activo"
-                                    th:field="*{estadoMarca}">
-                                <label class="form-check-label" for="activo">Categoría activa</label>
+                                    th:field="*{activo}">
+                                <label class="form-check-label" for="activo">Marca activa</label>
                             </div>
                         </div>
                     </div>

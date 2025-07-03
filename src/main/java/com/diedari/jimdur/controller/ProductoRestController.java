@@ -19,12 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.diedari.jimdur.dto.ProductoDTO;
 import com.diedari.jimdur.dto.ProductoProveedorDTO;
-import com.diedari.jimdur.model.Categoria;
-import com.diedari.jimdur.model.Marca;
-import com.diedari.jimdur.model.Proveedor;
-import com.diedari.jimdur.repository.CategoriaRepository;
-import com.diedari.jimdur.repository.MarcaRepository;
-import com.diedari.jimdur.repository.ProveedorRepository;
+import com.diedari.jimdur.model.business.Categoria;
+import com.diedari.jimdur.model.business.Marca;
+import com.diedari.jimdur.model.business.Proveedor;
+import com.diedari.jimdur.repository.business.CategoriaRepository;
+import com.diedari.jimdur.repository.business.MarcaRepository;
+import com.diedari.jimdur.repository.business.ProveedorRepository;
 import com.diedari.jimdur.service.ProductoService;
 
 import jakarta.validation.Valid;
@@ -284,8 +284,14 @@ public class ProductoRestController {
     public ResponseEntity<Map<String, Object>> obtenerDatosFormulario() {
         Map<String, Object> datos = new HashMap<>();
 
-        List<Categoria> categorias = categoriaRepository.findByEstadoActivaTrueOrderByNombreCategoriaAsc();
-        List<Marca> marcas = marcaRepository.findByEstadoMarcaTrueOrderByNombreMarcaAsc();
+        List<Categoria> categorias = categoriaRepository.findAll().stream()
+                .filter(c -> c.getActivo())
+                .sorted((c1, c2) -> c1.getNombre().compareTo(c2.getNombre()))
+                .collect(Collectors.toList());
+        List<Marca> marcas = marcaRepository.findAll().stream()
+                .filter(m -> m.getActivo())
+                .sorted((m1, m2) -> m1.getNombre().compareTo(m2.getNombre()))
+                .collect(Collectors.toList());
 
         // Obtener y filtrar proveedores
         List<Proveedor> todosLosProveedores = proveedorRepository.findAll();
@@ -294,10 +300,10 @@ public class ProductoRestController {
 
         // Filtrar y mapear a DTO simplificado
         List<Map<String, Object>> proveedoresDTO = todosLosProveedores.stream()
-                .filter(p -> "Activo".equals(p.getEstadoActivo()))
+                .filter(p -> p.getActivo())
                 .map(p -> {
                     Map<String, Object> dto = new HashMap<>();
-                    dto.put("idProveedor", p.getIdProveedor());
+                    dto.put("idProveedor", p.getId());
                     dto.put("nombre", p.getNombre());
                     return dto;
                 })

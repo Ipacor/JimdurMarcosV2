@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.diedari.jimdur.model.Ubicaciones;
+import com.diedari.jimdur.model.business.Ubicaciones;
 import com.diedari.jimdur.service.UbicacionService;
 
 @RestController
@@ -36,7 +36,7 @@ public class UbicacionRestController {
     // Actualizar ubicación existente
     @PutMapping("/{id}")
     public Ubicaciones actualizarUbicacion(@PathVariable Long id, @RequestBody Ubicaciones ubicacion) {
-        ubicacion.setIdUbicacion(id);
+        ubicacion.setId(id);
         return ubicacionService.actualizarUbicacion(ubicacion);
     }
 

@@ -13,23 +13,23 @@ import com.diedari.jimdur.dto.ProductoDTO;
 import com.diedari.jimdur.dto.ProductoProveedorDTO;
 import com.diedari.jimdur.dto.UbicacionDTO;
 import com.diedari.jimdur.mapper.ProductoMapper;
-import com.diedari.jimdur.model.Categoria;
-import com.diedari.jimdur.model.CompatibilidadProducto;
-import com.diedari.jimdur.model.EspecificacionProducto;
-import com.diedari.jimdur.model.ImagenProducto;
-import com.diedari.jimdur.model.Marca;
-import com.diedari.jimdur.model.Producto;
-import com.diedari.jimdur.model.ProductoProveedor;
-import com.diedari.jimdur.model.Proveedor;
-import com.diedari.jimdur.model.Ubicaciones;
-import com.diedari.jimdur.repository.CategoriaRepository;
-import com.diedari.jimdur.repository.CompatibilidadProductoRepository;
-import com.diedari.jimdur.repository.EspecificacionProductoRepository;
-import com.diedari.jimdur.repository.ImagenProductoRepository;
-import com.diedari.jimdur.repository.MarcaRepository;
-import com.diedari.jimdur.repository.ProductoProveedorRepository;
-import com.diedari.jimdur.repository.ProductoRepository;
-import com.diedari.jimdur.repository.ProveedorRepository;
+import com.diedari.jimdur.model.business.Categoria;
+import com.diedari.jimdur.model.business.CompatibilidadProducto;
+import com.diedari.jimdur.model.business.EspecificacionProducto;
+import com.diedari.jimdur.model.business.ImagenProducto;
+import com.diedari.jimdur.model.business.Marca;
+import com.diedari.jimdur.model.business.Producto;
+import com.diedari.jimdur.model.business.ProductoProveedor;
+import com.diedari.jimdur.model.business.Proveedor;
+import com.diedari.jimdur.model.business.Ubicaciones;
+import com.diedari.jimdur.repository.business.CategoriaRepository;
+import com.diedari.jimdur.repository.business.CompatibilidadProductoRepository;
+import com.diedari.jimdur.repository.business.EspecificacionProductoRepository;
+import com.diedari.jimdur.repository.business.ImagenProductoRepository;
+import com.diedari.jimdur.repository.business.MarcaRepository;
+import com.diedari.jimdur.repository.business.ProductoProveedorRepository;
+import com.diedari.jimdur.repository.business.ProductoRepository;
+import com.diedari.jimdur.repository.business.ProveedorRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -113,13 +113,11 @@ public class ProductoServiceImpl implements ProductoService {
         Marca marca = marcaRepository.findById(productoDTO.getIdMarca())
                 .orElseThrow(() -> new RuntimeException("Marca no encontrada"));
 
-        // Primero, eliminar todas las relaciones existentes
-        // Es importante hacer esto antes de cualquier otra operación
-        especificacionProductoRepository.deleteByProducto(productoExistente);
-        compatibilidadProductoRepository.deleteByProducto(productoExistente);
-        productoProveedorRepository.deleteByIdProducto(productoExistente.getIdProducto());
+        // Eliminar relaciones existentes (en memoria)
+        especificacionProductoRepository.findAll().removeIf(e -> e.getProducto().equals(productoExistente));
+        compatibilidadProductoRepository.findAll().removeIf(c -> c.getProducto().equals(productoExistente));
+        productoProveedorRepository.findAll().removeIf(pp -> pp.getIdProducto().equals(productoExistente.getIdProducto()));
 
-        // Forzar la sincronización con la base de datos
         productoRepository.flush();
         /*
          * Fuerza que los cambios pendientes en la persistencia (en la memoria) se sincronicen inmediatamente con la base de datos.
@@ -255,27 +253,18 @@ public class ProductoServiceImpl implements ProductoService {
         }
 
         for (ProductoProveedorDTO proveedorDTO : proveedoresDTO) {
-            // Solo procesar si hay un proveedor seleccionado y precio de compra
             if (proveedorDTO.getIdProveedor() != null && proveedorDTO.getPrecioCompra() != null) {
                 try {
-                    // Obtener el proveedor
                     Proveedor proveedor = proveedorRepository.findById(proveedorDTO.getIdProveedor())
                             .orElseThrow(() -> new RuntimeException("Proveedor no encontrado"));
-
-                    // Crear la relación con los IDs correctos
                     ProductoProveedor productoProveedor = ProductoProveedor.builder()
                             .idProducto(producto.getIdProducto())
-                            .idProveedor(proveedor.getIdProveedor())
+                            .idProveedor(proveedor.getId())
                             .precioCompra(proveedorDTO.getPrecioCompra())
                             .build();
-
-                    // Establecer las relaciones bidireccionales
                     productoProveedor.setProducto(producto);
                     productoProveedor.setProveedor(proveedor);
-
-                    // Guardar la relación
                     productoProveedorRepository.save(productoProveedor);
-
                 } catch (Exception e) {
                     throw new RuntimeException("Error al guardar la relación producto-proveedor: " + e.getMessage());
                 }
@@ -325,35 +314,46 @@ public class ProductoServiceImpl implements ProductoService {
     private String generateSlug(String nombre) {
         if (nombre == null)
             return "";
-        String slug = nombre.toLowerCase()
-                .replaceAll("[^a-z0-9\\s-]", "") // Eliminar caracteres especiales
-                .replaceAll("\\s+", "-") // Reemplazar espacios por guiones
-                .replaceAll("-+", "-") // Eliminar guiones múltiples
-                .replaceAll("^-|-$", ""); // Eliminar guiones al inicio y final
-
-        // Asegurar que el slug sea único
-        String slugBase = slug;
+        String slugBase = nombre.toLowerCase()
+                .replaceAll("[^a-z0-9\\s-]", "")
+                .replaceAll("\\s+", "-")
+                .replaceAll("-+", "-")
+                .replaceAll("^-|-$", "");
+        String slug = slugBase;
         int contador = 1;
-        while (productoRepository.findBySlug(slug) != null) {
-            slug = slugBase + "-" + contador++;
+        boolean exists = true;
+        while (exists) {
+            exists = false;
+            for (Producto p : productoRepository.findAll()) {
+                if (p.getSlug() != null && p.getSlug().equals(slug)) {
+                    exists = true;
+                    slug = slugBase + "-" + contador++;
+                    break;
+                }
+            }
         }
         return slug;
     }
 
     @Override
     public boolean existeSkuProducto(String sku, Long idProducto) {
-        return idProducto != null ? productoRepository.existsBySkuAndIdProductoNot(sku, idProducto)
-                : productoRepository.existsBySku(sku);
+        if (sku == null) return false;
+        return productoRepository.findAll().stream()
+            .anyMatch(p -> p.getSku() != null && p.getSku().equals(sku) && (idProducto == null || !p.getIdProducto().equals(idProducto)));
     }
 
     @Override
     public List<Producto> obtenerProductoPorEstado(boolean activo) {
-        return productoRepository.findByActivo(activo);
+        return productoRepository.findAll().stream()
+            .filter(p -> p.getActivo() != null && p.getActivo() == activo)
+            .collect(Collectors.toList());
     }
 
     @Override
     public Producto obtenerProductoPorSlug(String slug) {
-        return productoRepository.findBySlug(slug);
+        return productoRepository.findAll().stream()
+            .filter(p -> p.getSlug() != null && p.getSlug().equals(slug))
+            .findFirst().orElse(null);
     }
 
     @Override
@@ -364,9 +364,8 @@ public class ProductoServiceImpl implements ProductoService {
             Producto producto = productoRepository.findById(idProducto)
                     .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
 
-            // Eliminar proveedores existentes y forzar flush para asegurar que la
-            // eliminación se complete
-            productoProveedorRepository.deleteByIdProducto(idProducto);
+            // Eliminar proveedores existentes en memoria
+            productoProveedorRepository.findAll().removeIf(pp -> pp.getIdProducto().equals(idProducto));
             productoProveedorRepository.flush();
 
             // Validar la lista de proveedores
@@ -420,11 +419,8 @@ public class ProductoServiceImpl implements ProductoService {
     }
     public UbicacionDTO convertirAUbicacionDTO(Ubicaciones ubicacion) {
         return UbicacionDTO.builder()
-            .idUbicacion(ubicacion.getIdUbicacion())
+            .idUbicacion(ubicacion.getId())
             .nombre(ubicacion.getNombre())
-            .descripcion(ubicacion.getDescripcion())
-            .codigo(ubicacion.getCodigo())
-            .capacidad(ubicacion.getCapacidad())
             .tipoUbicacion(ubicacion.getTipoUbicacion())
             .build();
     }

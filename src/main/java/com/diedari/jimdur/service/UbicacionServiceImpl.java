@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.diedari.jimdur.model.Ubicaciones;
-import com.diedari.jimdur.repository.UbicacionRepository;
+import com.diedari.jimdur.model.business.Ubicaciones;
+import com.diedari.jimdur.repository.business.UbicacionRepository;
 
 @Service
 public class UbicacionServiceImpl implements UbicacionService {

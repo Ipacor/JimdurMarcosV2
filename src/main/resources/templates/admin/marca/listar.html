@@ -47,14 +47,14 @@
                                     <span class="input-group-text bg-transparent border-end-0">
                                         <i class="fas fa-search text-muted"></i>
                                     </span>
-                                    <input type="text" class="form-control border-start-0 ps-0" name="nombreMarca"
-                                        th:value="${nombreMarca}" placeholder="Buscar por nombre..." />
+                                    <input type="text" class="form-control border-start-0 ps-0" name="nombre"
+                                        th:value="${nombre}" placeholder="Buscar por nombre..." />
                                     <input type="hidden" name="sortField" th:value="${sortField}" />
                                     <input type="hidden" name="sortDirection" th:value="${sortDirection}" />
-                                    <select name="estadoMarca" class="form-select">
+                                    <select name="estado" class="form-select">
                                         <option value="">Todos los estados</option>
-                                        <option value="activa" th:selected="${estadoMarca == 'activa'}">Activas</option>
-                                        <option value="inactiva" th:selected="${estadoMarca == 'inactiva'}">Inactivas</option>
+                                        <option value="activa" th:selected="${estado == 'activa'}">Activas</option>
+                                        <option value="inactiva" th:selected="${estado == 'inactiva'}">Inactivas</option>
                                     </select>
                                     <button type="submit" class="btn btn-primary">Buscar</button>
                                 </div>
@@ -69,9 +69,9 @@
                         <thead class="table-light">
                             <tr>
                                 <th>
-                                    <a th:href="@{'/admin/marca?page=' + ${currentPage} + '&sortField=nombreMarca&sortDirection=' + ${reverseSortDirection} + ${nombreMarca != null ? '&nombreMarca=' + nombreMarca : ''} + ${estadoMarca != null ? '&estadoMarca=' + estadoMarca : ''}}">
+                                    <a th:href="@{'/admin/marca?page=' + ${currentPage} + '&sortField=nombre&sortDirection=' + ${reverseSortDirection} + ${nombre != null ? '&nombre=' + nombre : ''} + ${estado != null ? '&estado=' + estado : ''}}">
                                         Nombre
-                                        <i class="fas" th:classappend="${sortField == 'nombreMarca' ? (sortDirection == 'asc' ? 'fa-sort-up' : 'fa-sort-down') : 'fa-sort'}"></i>
+                                        <i class="fas" th:classappend="${sortField == 'nombre' ? (sortDirection == 'asc' ? 'fa-sort-up' : 'fa-sort-down') : 'fa-sort'}"></i>
                                     </a>
                                 </th>
                                 <th>Descripción</th>
@@ -79,9 +79,9 @@
                                 <th>Sitio Web</th>
                                 <th>Productos</th>
                                 <th>
-                                    <a th:href="@{'/admin/marca?page=' + ${currentPage} + '&sortField=estadoMarca&sortDirection=' + ${reverseSortDirection} + ${nombreMarca != null ? '&nombreMarca=' + nombreMarca : ''} + ${estadoMarca != null ? '&estadoMarca=' + estadoMarca : ''}}">
+                                    <a th:href="@{'/admin/marca?page=' + ${currentPage} + '&sortField=activo&sortDirection=' + ${reverseSortDirection} + ${nombre != null ? '&nombre=' + nombre : ''} + ${estado != null ? '&estado=' + estado : ''}}">
                                         Estado
-                                        <i class="fas" th:classappend="${sortField == 'estadoMarca' ? (sortDirection == 'asc' ? 'fa-sort-up' : 'fa-sort-down') : 'fa-sort'}"></i>
+                                        <i class="fas" th:classappend="${sortField == 'activo' ? (sortDirection == 'asc' ? 'fa-sort-up' : 'fa-sort-down') : 'fa-sort'}"></i>
                                     </a>
                                 </th>
                                 <th class="text-center">Acciones</th>
@@ -89,14 +89,14 @@
                         </thead>
                         <tbody>
                             <tr th:each="marca : ${marcas}">
-                                <td th:text="${marca.nombreMarca}">Nombre</td>
-                                <td th:text="${#strings.abbreviate(marca.descripcionMarca, 60)}">Descripción</td>
-                                <td th:text="${marca.paisOrigenMarca}">País</td>
-                                <td th:text="${marca.sitioWebMarca}">Sitio Web</td>
+                                <td th:text="${marca.nombre}">Nombre</td>
+                                <td th:text="${#strings.abbreviate(marca.descripcion, 60)}">Descripción</td>
+                                <td th:text="${marca.paisOrigen}">País</td>
+                                <td th:text="${marca.sitioWeb}">Sitio Web</td>
                                 <td th:text="${marca.productos.size()}">Productos</td>
                                 <td>
-                                    <span class="badge" th:classappend="${marca.estadoMarca} ? 'bg-success' : 'bg-secondary'"
-                                        th:text="${marca.estadoMarca} ? 'Activa' : 'Inactiva'">
+                                    <span class="badge" th:classappend="${marca.activo} ? 'bg-success' : 'bg-secondary'"
+                                        th:text="${marca.activo} ? 'Activa' : 'Inactiva'">
                                     </span>
                                 </td>
                                 <td class="text-center">
@@ -130,14 +130,14 @@
                         <ul class="pagination">
                             <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
                                 <a class="page-link"
-                                    th:href="@{'/admin/marca?page=0&sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection} + ${nombreMarca != null ? '&nombreMarca=' + nombreMarca : ''} + ${estadoMarca != null ? '&estadoMarca=' + estadoMarca : ''}}"
+                                    th:href="@{'/admin/marca?page=0&sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection} + ${nombre != null ? '&nombre=' + nombre : ''} + ${estado != null ? '&estado=' + estado : ''}}"
                                     aria-label="Primera">
                                     <i class="fas fa-angle-double-left"></i>
                                 </a>
                             </li>
                             <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
                                 <a class="page-link"
-                                    th:href="@{'/admin/marca?page=' + ${currentPage - 1} + '&sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection} + ${nombreMarca != null ? '&nombreMarca=' + nombreMarca : ''} + ${estadoMarca != null ? '&estadoMarca=' + estadoMarca : ''}}"
+                                    th:href="@{'/admin/marca?page=' + ${currentPage - 1} + '&sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection} + ${nombre != null ? '&nombre=' + nombre : ''} + ${estado != null ? '&estado=' + estado : ''}}"
                                     aria-label="Anterior">
                                     <i class="fas fa-angle-left"></i>
                                 </a>
@@ -145,19 +145,19 @@
                             <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
                                 th:classappend="${currentPage == i} ? 'active'">
                                 <a class="page-link"
-                                    th:href="@{'/admin/marca?page=' + ${i} + '&sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection} + ${nombreMarca != null ? '&nombreMarca=' + nombreMarca : ''} + ${estadoMarca != null ? '&estadoMarca=' + estadoMarca : ''}}"
+                                    th:href="@{'/admin/marca?page=' + ${i} + '&sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection} + ${nombre != null ? '&nombre=' + nombre : ''} + ${estado != null ? '&estado=' + estado : ''}}"
                                     th:text="${i + 1}">1</a>
                             </li>
                             <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
                                 <a class="page-link"
-                                    th:href="@{'/admin/marca?page=' + ${currentPage + 1} + '&sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection} + ${nombreMarca != null ? '&nombreMarca=' + nombreMarca : ''} + ${estadoMarca != null ? '&estadoMarca=' + estadoMarca : ''}}"
+                                    th:href="@{'/admin/marca?page=' + ${currentPage + 1} + '&sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection} + ${nombre != null ? '&nombre=' + nombre : ''} + ${estado != null ? '&estado=' + estado : ''}}"
                                     aria-label="Siguiente">
                                     <i class="fas fa-angle-right"></i>
                                 </a>
                             </li>
                             <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
                                 <a class="page-link"
-                                    th:href="@{'/admin/marca?page=' + ${totalPages - 1} + '&sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection} + ${nombreMarca != null ? '&nombreMarca=' + nombreMarca : ''} + ${estadoMarca != null ? '&estadoMarca=' + estadoMarca : ''}}"
+                                    th:href="@{'/admin/marca?page=' + ${totalPages - 1} + '&sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection} + ${nombre != null ? '&nombre=' + nombre : ''} + ${estado != null ? '&estado=' + estado : ''}}"
                                     aria-label="Última">
                                     <i class="fas fa-angle-double-right"></i>
                                 </a>

@@ -1,7 +1,5 @@
 package com.diedari.jimdur.dto;
 
-import com.diedari.jimdur.model.DireccionProveedor.TipoDireccion;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,5 +27,5 @@ public class DireccionProveedorDTO {
 
     private String referencia;
 
-    private TipoDireccion tipoDireccion;
+    private String tipoDireccion;
 }

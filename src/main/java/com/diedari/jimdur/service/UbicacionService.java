@@ -2,7 +2,7 @@ package com.diedari.jimdur.service;
 
 import java.util.List;
 
-import com.diedari.jimdur.model.Ubicaciones;
+import com.diedari.jimdur.model.business.Ubicaciones;
 
 public interface UbicacionService {
     public List<Ubicaciones> listarUbicaciones();

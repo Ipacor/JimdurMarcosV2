@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,14 +22,14 @@ import com.diedari.jimdur.dto.EspecificacionProductoDTO;
 import com.diedari.jimdur.dto.ProductoDTO;
 import com.diedari.jimdur.dto.ProductoProveedorDTO;
 import com.diedari.jimdur.mapper.ProductoMapper;
-import com.diedari.jimdur.model.Categoria;
-import com.diedari.jimdur.model.Marca;
-import com.diedari.jimdur.model.Producto;
-import com.diedari.jimdur.model.Proveedor;
-import com.diedari.jimdur.repository.CategoriaRepository;
-import com.diedari.jimdur.repository.MarcaRepository;
-import com.diedari.jimdur.repository.ProductoRepository;
-import com.diedari.jimdur.repository.ProveedorRepository;
+import com.diedari.jimdur.model.business.Categoria;
+import com.diedari.jimdur.model.business.Marca;
+import com.diedari.jimdur.model.business.Producto;
+import com.diedari.jimdur.model.business.Proveedor;
+import com.diedari.jimdur.repository.business.CategoriaRepository;
+import com.diedari.jimdur.repository.business.MarcaRepository;
+import com.diedari.jimdur.repository.business.ProductoRepository;
+import com.diedari.jimdur.repository.business.ProveedorRepository;
 import com.diedari.jimdur.service.ProductoService;
 
 import lombok.RequiredArgsConstructor;
@@ -36,6 +37,7 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequestMapping("/admin/productos")
 @RequiredArgsConstructor
+@PreAuthorize("hasAuthority('LEER_PRODUCTOS')")
 public class ProductoController {
 
     private final ProductoService productoService;
@@ -59,7 +61,7 @@ public class ProductoController {
         
         Page<Producto> productosPage;
         if (nombreProducto != null && !nombreProducto.isEmpty()) {
-            productosPage = productoRepository.findByNombreContainingIgnoreCase(nombreProducto, pageable);
+            productosPage = productoRepository.findAll(pageable);
         } else {
             productosPage = productoRepository.findAll(pageable);
         }
@@ -67,8 +69,12 @@ public class ProductoController {
         // Convertir Page<Producto> a Page<ProductoDTO>
         Page<ProductoDTO> productos = productosPage.map(productoMapper::toDTO);
 
-        List<Categoria> categorias = categoriaRepository.findByEstadoActiva(true);
-        List<Marca> marcas = marcaRepository.findByEstadoMarca(true);
+        List<Categoria> categorias = categoriaRepository.findAll().stream()
+                .filter(c -> c.getActivo())
+                .collect(java.util.stream.Collectors.toList());
+        List<Marca> marcas = marcaRepository.findAll().stream()
+                .filter(m -> m.getActivo())
+                .collect(java.util.stream.Collectors.toList());
 
         model.addAttribute("productos", productos);
         model.addAttribute("categorias", categorias);
@@ -89,6 +95,7 @@ public class ProductoController {
     }
 
     @GetMapping("/nuevo")
+    @PreAuthorize("hasAuthority('CREAR_PRODUCTOS')")
     public String mostrarFormularioNuevo(Model model) {
         ProductoDTO producto = new ProductoDTO();
         producto.setActivo(true); // Por defecto activo
@@ -108,6 +115,7 @@ public class ProductoController {
     }
 
     @GetMapping("/{id}/editar")
+    @PreAuthorize("hasAuthority('EDITAR_PRODUCTOS')")
     public String mostrarFormularioEditar(@PathVariable Long id, Model model) {
         try {
             ProductoDTO producto = productoService.obtenerProductoPorId(id);
@@ -116,9 +124,15 @@ public class ProductoController {
             }
 
             // Cargar datos necesarios para el formulario
-            List<Categoria> categorias = categoriaRepository.findByEstadoActiva(true);
-            List<Marca> marcas = marcaRepository.findByEstadoMarca(true);
-            List<Proveedor> proveedores = proveedorRepository.findByEstadoActivo("Activo");
+            List<Categoria> categorias = categoriaRepository.findAll().stream()
+                    .filter(c -> c.getActivo())
+                    .collect(java.util.stream.Collectors.toList());
+            List<Marca> marcas = marcaRepository.findAll().stream()
+                    .filter(m -> m.getActivo())
+                    .collect(java.util.stream.Collectors.toList());
+            List<Proveedor> proveedores = proveedorRepository.findAll().stream()
+                    .filter(p -> p.getActivo())
+                    .collect(java.util.stream.Collectors.toList());
 
             // Asegurarse de que las listas nunca sean null
             if (producto.getProveedores() == null) {
@@ -155,6 +169,7 @@ public class ProductoController {
     }
 
     @PostMapping("/{id}/eliminar")
+    @PreAuthorize("hasAuthority('DESACTIVAR_PRODUCTOS')")
     public String eliminarProducto(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
             productoService.eliminarProducto(id);
@@ -177,8 +192,12 @@ public class ProductoController {
     }
 
     private void cargarDatosFormulario(Model model, ProductoDTO producto) {
-        List<Categoria> categorias = categoriaRepository.findByEstadoActiva(true);
-        List<Marca> marcas = marcaRepository.findByEstadoMarca(true);
+        List<Categoria> categorias = categoriaRepository.findAll().stream()
+                .filter(c -> c.getActivo())
+                .collect(java.util.stream.Collectors.toList());
+        List<Marca> marcas = marcaRepository.findAll().stream()
+                .filter(m -> m.getActivo())
+                .collect(java.util.stream.Collectors.toList());
         List<Proveedor> proveedores = proveedorRepository.findAll();
 
         model.addAttribute("producto", producto);

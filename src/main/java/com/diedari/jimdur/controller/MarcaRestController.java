@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.diedari.jimdur.model.Marca;
+import com.diedari.jimdur.model.business.Marca;
 import com.diedari.jimdur.service.MarcaService;
 
 
