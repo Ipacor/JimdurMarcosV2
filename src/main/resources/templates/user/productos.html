@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- AOS CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" th:href="@{/css/user/all.css}">
+
+    <title>Catalogo Productos</title>
+
+    <style>
+/* Contenedor de los controles */
+.carousel-control-prev,
+.carousel-control-next {
+    width: 40px;
+    height: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+.carousel-control-prev {
+    left: 10px;
+}
+
+.carousel-control-next {
+    right: 10px;
+}
+
+/* Hover effect */
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.8);
+    transform: translateY(-50%) scale(1.1);
+}
+
+/* Iconos de las flechas */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    width: 16px;
+    height: 16px;
+    background-size: 16px 16px;
+}
+
+/* Alternativa: Flechas más estilizadas con bordes */
+.carousel-control-prev.style-2,
+.carousel-control-next.style-2 {
+    width: 45px;
+    height: 45px;
+    background-color: white;
+    border: 2px solid #007bff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.carousel-control-prev.style-2:hover,
+.carousel-control-next.style-2:hover {
+    background-color: #007bff;
+    border-color: #0056b3;
+}
+
+.carousel-control-prev.style-2 .carousel-control-prev-icon,
+.carousel-control-next.style-2 .carousel-control-next-icon {
+    filter: invert(1) sepia(1) saturate(5) hue-rotate(175deg);
+}
+
+.carousel-control-prev.style-2:hover .carousel-control-prev-icon,
+.carousel-control-next.style-2:hover .carousel-control-next-icon {
+    filter: brightness(0) invert(1);
+}
+
+/* Estilo minimalista con solo bordes */
+.carousel-control-prev.minimal,
+.carousel-control-next.minimal {
+    width: 35px;
+    height: 35px;
+    background-color: transparent;
+    border: 2px solid white;
+    border-radius: 4px;
+}
+
+.carousel-control-prev.minimal:hover,    
+.carousel-control-next.minimal:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Flechas más grandes y visibles */
+.carousel-control-prev.large,
+.carousel-control-next.large {
+    width: 55px;
+    height: 55px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.carousel-control-prev.large .carousel-control-prev-icon,
+.carousel-control-next.large .carousel-control-next-icon {
+    width: 24px;
+    height: 24px;
+    background-size: 24px 24px;
+    filter: invert(1);
+}
+
+.carousel-control-prev.large:hover,
+.carousel-control-next.large:hover {
+    background-color: #007bff;
+    transform: translateY(-50%) scale(1.08);
+}
+
+/* Ocultar flechas por defecto y mostrar solo en hover del contenedor */
+.product-card .carousel-control-prev,
+.product-card .carousel-control-next {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.product-card:hover .carousel-control-prev,
+.product-card:hover .carousel-control-next {
+    opacity: 0.8;
+}
+
+.product-card:hover .carousel-control-prev:hover,
+.product-card:hover .carousel-control-next:hover {
+    opacity: 1;
+}
+
+/* Responsivo - ocultar en móviles */
+@media (max-width: 768px) {
+    .carousel-control-prev,
+    .carousel-control-next {
+        display: none;
+    }
+}
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+
+    <main class="py-4">
+        <div class="container">
+            <h1 class="mb-4 fw-bold">Catálogo de Productos</h1>
+
+            <div class="row">
+                <!-- Sidebar Filters (Desktop) -->
+                <div class="col-lg-3 d-none d-lg-block">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="card-title mb-0">Filtros</h5>
+                                <button class="btn btn-sm btn-link text-decoration-none p-0" id="clearFilters">
+                                    <i class="bi bi-x"></i> Limpiar
+                                </button>
+                            </div>
+
+                            <!-- Categorías -->
+                            <div class="mb-4">
+                                <h6 class="fw-bold mb-2">Categorías</h6>
+                                <div class="form-check mb-2" th:each="cat : ${categorias}">
+                                    <input class="form-check-input" type="checkbox" th:id="'category-' + ${cat.id}"
+                                        th:value="${cat.id}" />
+                                    <label class="form-check-label" th:for="'category-' + ${cat.id}"
+                                        th:text="${cat.nombreCategoria}">Categoría</label>
+                                </div>
+                            </div>
+
+
+                            <!-- Marcas -->
+                            <div class="mb-4">
+                                <h6 class="fw-bold mb-2">Marcas</h6>
+                                <div class="form-check mb-2" th:each="marca : ${marcas}">
+                                    <input class="form-check-input" type="checkbox" th:id="'marca-' + ${marca.id}"
+                                        th:value="${marca.id}">
+                                    <label class="form-check-label" th:for="'marca-' + ${marca.id}"
+                                        th:text="${marca.nombreMarca}">Motul</label>
+                                </div>
+                            </div>
+
+                            <!-- Price Range -->
+                            <div class="mb-4">
+                                <h6 class="fw-bold mb-2">Precio</h6>
+                                <div class="range">
+                                    <input type="range" class="form-range" min="0" max="100000" step="1000"
+                                        id="priceRange">
+                                </div>
+                                <div class="d-flex justify-content-between mt-2">
+                                    <span class="small text-muted">$0</span>
+                                    <span class="small text-muted">$100.000</span>
+                                </div>
+                            </div>
+
+                            <!-- Other Filters -->
+                            <div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" id="inStock">
+                                    <label class="form-check-label" for="inStock">En stock</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" id="onSale">
+                                    <label class="form-check-label" for="onSale">En oferta</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- ! Main Content -->
+                <div class="col-lg-9">
+                    <!-- ? Toolbar -->
+                    <div class="d-flex flex-column 
+                        flex-sm-row justify-content-between align-items-start align-items-sm-center mb-4 gap-3">
+                        <p class="text-muted mb-0" th:text="'Mostrando ' + ${productos.size()} + ' productos'">Mostrando
+                            12 productos</p>
+                        <div class="d-flex gap-2 w-100 w-sm-auto">
+                            <select class="form-select">
+                                <option value="featured">Destacados</option>
+                                <option value="price-low">Precio: Menor a Mayor</option>
+                                <option value="price-high">Precio: Mayor a Menor</option>
+                                <option value="rating">Mejor valorados</option>
+                                <option value="newest">Más nuevos</option>
+                            </select>
+
+                            <!-- todo Mobile Filter Button -->
+                            <button class="btn btn-outline-primary d-lg-none" type="button" data-bs-toggle="offcanvas"
+                                data-bs-target="#filtersOffcanvas">
+                                <i class="bi bi-sliders me-1"></i> Filtros
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- ?  Products Grid -->
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+                        <!-- todo Productos -->
+                        <div class="col" th:each="producto : ${productos}">
+                            <div class="card h-100 product-card">
+                                <div class="position-relative pt-3 px-3">
+                                    <span class="position-absolute top-0 end-0 badge bg-danger m-3"
+                                        th:if="${producto.tipoDescuento == 'porcentaje' and producto.descuento > 0}"
+                                        th:text="'-' + ${producto.descuento + '%' }"></span>
+
+                                    <!-- Carrusel si hay imágenes -->
+                                    <div th:if="${not #lists.isEmpty(producto.imagenesGuardadas)}"
+                                        th:id="'carousel-' + ${producto.idProducto}" class="carousel slide"
+                                        data-bs-ride="carousel">
+
+                                        <div class="carousel-inner">
+                                            <div class="carousel-item"
+                                                th:each="img, stat : ${producto.imagenesGuardadas}"
+                                                th:classappend="${stat.index == 0} ? ' active'">
+                                                <img class="d-block w-100 product-img"
+                                                    th:src="@{'/uploads/productos/' + ${img.nombreArchivo}}"
+                                                    th:alt="${producto.nombre}">
+                                            </div>
+                                        </div>
+
+                                        <!-- Botones de control -->
+                                        <button class="carousel-control-prev" type="button"
+                                            th:attr="data-bs-target='#carousel-' + ${producto.idProducto}"
+                                            data-bs-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        </button>
+                                        <button class="carousel-control-next" type="button"
+                                            th:attr="data-bs-target='#carousel-' + ${producto.idProducto}"
+                                            data-bs-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        </button>
+                                    </div>
+
+                                    <!-- Imagen por defecto si no hay imágenes -->
+                                    <div th:if="${#lists.isEmpty(producto.imagenesGuardadas)}">
+                                        <img th:src="@{/image/no-image.png}" class="card-img-top product-img"
+                                            th:alt="${producto.nombre}">
+                                    </div>
+                                </div>
+
+                                <div class="card-body">
+                                    <p class="text-muted small"
+                                        th:text="${producto.nombreCategoria} + ' | ' +  ${producto.nombreMarca}">
+                                        Aceites | Motul
+                                    </p>
+                                    <h5 class="card-title product-title">
+                                        <a th:href="@{'/producto/' + ${producto.slug}}"
+                                            class="text-decoration-none text-dark" th:text="${producto.nombre}">Nombre
+                                            del Producto</a>
+                                    </h5>
+
+                                    <div class="d-flex align-items-center mb-2">
+                                        <div class="text-warning me-1">
+                                            <i class="bi bi-star-fill"></i>
+                                        </div>
+                                        <span class="fw-medium small">4.8</span>
+                                        <span class="text-muted small ms-1">(124)</span>
+                                    </div>
+
+                                    <div class="d-flex align-items-center">
+                                        <span class="fw-bold text-primary fs-5"
+                                            th:text="'S/ ' + ${#numbers.formatDecimal(producto.precioOferta != null ? producto.precioOferta : producto.precio, 1, 2)}">
+                                            S/ 0.00
+                                        </span>
+                                        <span class="text-muted text-decoration-line-through ms-2"
+                                            th:if="${producto.descuento > 0}"
+                                            th:text="'S/ ' + ${#numbers.formatDecimal(producto.precio, 1, 2)}">
+                                            S/ 0.00
+                                        </span>
+                                    </div>
+
+                                    <p class="text-success small mt-1" th:text="'En stock'">En stock</p>
+                                </div>
+
+                                <div class="card-footer bg-white border-top-0">
+                                    <button class="btn btn-primary w-100">
+                                        <i class="bi bi-cart me-2"></i>Agregar al carrito
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Pagination -->
+                    <nav class="mt-5">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                                    <i class="bi bi-chevron-left"></i>
+                                </a>
+                            </li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">
+                                    <i class="bi bi-chevron-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Filters Offcanvas -->
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="filtersOffcanvas"
+            aria-labelledby="filtersOffcanvasLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="filtersOffcanvasLabel">Filtros</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <div class="d-flex justify-content-end mb-3">
+                    <button class="btn btn-sm btn-link text-decoration-none p-0" id="clearFiltersMobile">
+                        <i class="bi bi-x"></i> Limpiar filtros
+                    </button>
+                </div>
+
+                <!-- Categories -->
+                <div class="mb-4">
+                    <h6 class="fw-bold mb-2">Categorías</h6>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="categoryMobile1">
+                        <label class="form-check-label" for="categoryMobile1">Aceites</label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="categoryMobile2">
+                        <label class="form-check-label" for="categoryMobile2">Frenos</label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="categoryMobile3">
+                        <label class="form-check-label" for="categoryMobile3">Baterías</label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="categoryMobile4">
+                        <label class="form-check-label" for="categoryMobile4">Filtros</label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="categoryMobile5">
+                        <label class="form-check-label" for="categoryMobile5">Transmisión</label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="categoryMobile6">
+                        <label class="form-check-label" for="categoryMobile6">Cascos</label>
+                    </div>
+                </div>
+
+                <!-- Brands -->
+                <div class="mb-4">
+                    <h6 class="fw-bold mb-2">Marcas</h6>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="brandMobile1">
+                        <label class="form-check-label" for="brandMobile1">Motul</label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="brandMobile2">
+                        <label class="form-check-label" for="brandMobile2">Brembo</label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="brandMobile3">
+                        <label class="form-check-label" for="brandMobile3">Yuasa</label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="brandMobile4">
+                        <label class="form-check-label" for="brandMobile4">K&N</label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="brandMobile5">
+                        <label class="form-check-label" for="brandMobile5">RK</label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="brandMobile6">
+                        <label class="form-check-label" for="brandMobile6">LS2</label>
+                    </div>
+                </div>
+
+                <!-- Price Range -->
+                <div class="mb-4">
+                    <h6 class="fw-bold mb-2">Precio</h6>
+                    <div class="range">
+                        <input type="range" class="form-range" min="0" max="100000" step="1000" id="priceRangeMobile">
+                    </div>
+                    <div class="d-flex justify-content-between mt-2">
+                        <span class="small text-muted">$0</span>
+                        <span class="small text-muted">$100.000</span>
+                    </div>
+                </div>
+
+                <!-- Other Filters -->
+                <div class="mb-4">
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="inStockMobile">
+                        <label class="form-check-label" for="inStockMobile">En stock</label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="onSaleMobile">
+                        <label class="form-check-label" for="onSaleMobile">En oferta</label>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary w-100 mt-3" data-bs-dismiss="offcanvas">Aplicar filtros</button>
+            </div>
+        </div>
+    </main>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

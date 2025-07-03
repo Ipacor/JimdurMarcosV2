@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JIMDUR EIRL</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- AOS CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" th:href="@{/css/user/all.css}">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Banner -->
+        <section class="hero-banner">
+            <div class="container">
+                <div class="row align-items-center py-5">
+                    <div class="col-lg-6">
+                        <h1 class="display-5 fw-bold mb-3">Repuestos de calidad para tu moto</h1>
+                        <p class="lead mb-4">Encuentra todo lo que necesitas para mantener tu moto en óptimas
+                            condiciones. Amplio catálogo de repuestos originales y alternativos.</p>
+                        <div class="d-grid gap-2 d-md-flex">
+                            <a href="catalogo.html" class="btn btn-primary btn-lg px-4">Ver Catálogo</a>
+                            <a href="contacto.html" class="btn btn-outline-secondary btn-lg px-4">Contactar</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <img th:src="@{/image/moto.jpg}" alt="Repuestos de motos" class="img-fluid rounded shadow-lg">
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Categories Section -->
+        <section class="py-5 bg-light">
+            <div class="container">
+                <h2 class="text-center mb-5">Categorías Principales</h2>
+
+                <div class="row g-4">
+                    <div class="col-6 col-md-4 col-lg-2" th:each="categoria : ${categorias}">
+                        <a th:href="@{'/categoria/' + ${categoria.slugCategoria}}" class="text-decoration-none">
+                            <div class="card h-100 border-0 shadow-sm category-card">
+                                <div class="card-body text-center">
+                                    <i th:class="'bi ' + ${categoria.iconoCategoria} + ' category-icon'"></i>
+                                    <h5 class="card-title mt-3" th:text="${categoria.nombreCategoria}">Nombre</h5>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Products -->
+        <section class="py-5">
+            <div class="container">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2>Productos Destacados</h2>
+                    <a href="catalogo.html" class="btn btn-outline-primary">Ver todos</a>
+                </div>
+                <div class="row g-4">
+                    <!-- Product 1 -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card h-100 product-card">
+                            <div class="badge bg-danger position-absolute top-0 end-0 m-2">-15%</div>
+                            <img src="img/product-1.jpg" class="card-img-top" alt="Aceite Motul 5100">
+                            <div class="card-body">
+                                <h5 class="card-title">Aceite Motul 5100 4T 15W50</h5>
+                                <div class="d-flex align-items-center mb-2">
+                                    <div class="ratings">
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-half text-warning"></i>
+                                    </div>
+                                    <small class="ms-2 text-muted">(24)</small>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <span class="text-muted text-decoration-line-through">$8,500</span>
+                                        <span class="fw-bold fs-5 ms-2">$7,225</span>
+                                    </div>
+                                    <a href="producto-1.html" class="btn btn-sm btn-outline-primary">Ver detalles</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 2 -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card h-100 product-card">
+                            <img src="img/product-2.jpg" class="card-img-top" alt="Kit de Transmisión">
+                            <div class="card-body">
+                                <h5 class="card-title">Kit de Transmisión Honda CG 150</h5>
+                                <div class="d-flex align-items-center mb-2">
+                                    <div class="ratings">
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star text-warning"></i>
+                                    </div>
+                                    <small class="ms-2 text-muted">(18)</small>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <span class="fw-bold fs-5">$12,900</span>
+                                    </div>
+                                    <a href="producto-2.html" class="btn btn-sm btn-outline-primary">Ver detalles</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 3 -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card h-100 product-card">
+                            <div class="badge bg-success position-absolute top-0 end-0 m-2">Nuevo</div>
+                            <img src="img/product-3.jpg" class="card-img-top" alt="Batería Yuasa">
+                            <div class="card-body">
+                                <h5 class="card-title">Batería Yuasa YTX7L-BS 12V</h5>
+                                <div class="d-flex align-items-center mb-2">
+                                    <div class="ratings">
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                    </div>
+                                    <small class="ms-2 text-muted">(32)</small>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <span class="fw-bold fs-5">$15,750</span>
+                                    </div>
+                                    <a href="producto-3.html" class="btn btn-sm btn-outline-primary">Ver detalles</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 4 -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card h-100 product-card">
+                            <img src="img/product-4.jpg" class="card-img-top" alt="Pastillas de Freno">
+                            <div class="card-body">
+                                <h5 class="card-title">Pastillas de Freno Yamaha FZ16</h5>
+                                <div class="d-flex align-items-center mb-2">
+                                    <div class="ratings">
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-half text-warning"></i>
+                                    </div>
+                                    <small class="ms-2 text-muted">(15)</small>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <span class="fw-bold fs-5">$5,200</span>
+                                    </div>
+                                    <a href="producto-4.html" class="btn btn-sm btn-outline-primary">Ver detalles</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Brands Section -->
+        <section class="py-5 bg-light">
+            <div class="container">
+                <h2 class="text-center mb-5">Marcas Destacadas</h2>
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-4 col-md-2 mb-4 mb-md-0">
+                        <img src="img/brand-honda.png" alt="Honda" class="img-fluid brand-logo">
+                    </div>
+                    <div class="col-4 col-md-2 mb-4 mb-md-0">
+                        <img src="img/brand-yamaha.png" alt="Yamaha" class="img-fluid brand-logo">
+                    </div>
+                    <div class="col-4 col-md-2 mb-4 mb-md-0">
+                        <img src="img/brand-suzuki.png" alt="Suzuki" class="img-fluid brand-logo">
+                    </div>
+                    <div class="col-4 col-md-2 mb-4 mb-md-0">
+                        <img src="img/brand-kawasaki.png" alt="Kawasaki" class="img-fluid brand-logo">
+                    </div>
+                    <div class="col-4 col-md-2 mb-4 mb-md-0">
+                        <img src="img/brand-motul.png" alt="Motul" class="img-fluid brand-logo">
+                    </div>
+                    <div class="col-4 col-md-2 mb-4 mb-md-0">
+                        <img src="img/brand-castrol.png" alt="Castrol" class="img-fluid brand-logo">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="py-5">
+            <div class="container">
+                <h2 class="text-center mb-5">Lo que dicen nuestros clientes</h2>
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100 testimonial-card">
+                            <div class="card-body">
+                                <div class="ratings mb-3">
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                </div>
+                                <p class="card-text">"Excelente servicio y productos de calidad. Siempre encuentro lo
+                                    que necesito para mi moto y a precios competitivos."</p>
+                                <div class="d-flex align-items-center mt-3">
+                                    <img src="img/avatar-1.jpg" alt="Cliente" class="rounded-circle me-3" width="50"
+                                        height="50">
+                                    <div>
+                                        <h6 class="mb-0">Carlos Rodríguez</h6>
+                                        <small class="text-muted">Cliente desde 2020</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100 testimonial-card">
+                            <div class="card-body">
+                                <div class="ratings mb-3">
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <i class="bi bi-star-half text-warning"></i>
+                                </div>
+                                <p class="card-text">"Muy buena atención y asesoramiento. Me ayudaron a elegir los
+                                    repuestos correctos para mi modelo de moto. Recomendado."</p>
+                                <div class="d-flex align-items-center mt-3">
+                                    <img src="img/avatar-2.jpg" alt="Cliente" class="rounded-circle me-3" width="50"
+                                        height="50">
+                                    <div>
+                                        <h6 class="mb-0">Laura Martínez</h6>
+                                        <small class="text-muted">Cliente desde 2021</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100 testimonial-card">
+                            <div class="card-body">
+                                <div class="ratings mb-3">
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <i class="bi bi-star text-warning"></i>
+                                </div>
+                                <p class="card-text">"Envíos rápidos y productos bien embalados. La calidad de los
+                                    repuestos es excelente y los precios son justos."</p>
+                                <div class="d-flex align-items-center mt-3">
+                                    <img src="img/avatar-3.jpg" alt="Cliente" class="rounded-circle me-3" width="50"
+                                        height="50">
+                                    <div>
+                                        <h6 class="mb-0">Miguel Sánchez</h6>
+                                        <small class="text-muted">Cliente desde 2019</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="py-5 bg-primary text-white">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-8 mb-4 mb-lg-0">
+                        <h2 class="fw-bold">¿Necesitas ayuda para encontrar un repuesto?</h2>
+                        <p class="lead mb-0">Nuestro equipo de expertos está listo para asesorarte y ayudarte a
+                            encontrar exactamente lo que necesitas.</p>
+                    </div>
+                    <div class="col-lg-4 text-lg-end">
+                        <a href="contacto.html" class="btn btn-light btn-lg">Contáctanos</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,211 @@
+/* Estilos Generales */
+:root {
+    --primary-color: #dc3545;
+    --secondary-color: #212529;
+    --light-color: #f8f9fa;
+    --dark-color: #232323;
+    --border-color: #e5e5e5;
+    --text-color: #333;
+    --light-gray: #f5f5f5;
+}
+
+/*------------------------ESTILOS NAVBAR------------------------- */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar {
+    border-bottom: 1px solid var(--border-color);
+    padding: 0.75rem 0;
+    background-color: white;
+}
+
+.nav-link {
+    color: var(--text-color);
+    font-weight: 500;
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    transition: color 0.2s;
+}
+
+.nav-link:hover {
+    color: var(--primary-color);
+}
+
+.nav-link.active {
+    color: var(--primary-color);
+    border-bottom: 2px solid red;
+}
+
+.navbar-brand img {
+    max-height: 40px;
+    transition: transform 0.3s;
+}
+
+.navbar-brand:hover img {
+    transform: scale(1.05);
+}
+
+.navbar-toggler {
+    border: none;
+    padding: 0.5rem;
+    box-shadow: none;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
+.btn-icon {
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid var(--border-color);
+    background-color: transparent;
+    color: var(--text-color);
+    transition: all 0.2s;
+}
+
+.btn-icon:hover {
+    background-color: var(--light-gray);
+    color: var(--primary-color);
+}
+
+.btn-icon.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.badge-count {
+    font-size: 0.65rem;
+    height: 18px;
+    width: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-form {
+    border-radius: 50px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    background-color: var(--light-gray);
+    width: 100%;
+}
+
+.search-form input {
+    border: none;
+    background-color: transparent;
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    width: 100%;
+}
+
+.search-form input:focus {
+    box-shadow: none;
+    background-color: transparent;
+}
+
+.search-form button {
+    border: none;
+    background-color: transparent;
+    color: var(--text-color);
+    padding: 0.5rem 1rem;
+}
+
+.search-form button:hover {
+    color: var(--primary-color);
+}
+
+.dropdown-menu {
+    border-radius: 0.5rem;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    min-width: 260px;
+}
+
+.cart-item {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+.cart-item img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 0.25rem;
+}
+
+/* Responsive Styles */
+@media (max-width: 991px) {
+    .navbar-collapse {
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border-color);
+    }
+    
+    .nav-link.active {
+        border-bottom: none;
+        border-left: 3px solid var(--primary-color);
+        padding-left: 0.75rem;
+        background-color: var(--light-gray);
+        border-radius: 0.25rem;
+    }
+    
+    .navbar-nav {
+        padding: 0.5rem 0;
+    }
+    
+    .dropdown-menu {
+        width: 100%;
+        margin-top: 0;                                                                                                                              
+        box-shadow: none;
+        border: none;
+        background-color: var(--light-gray);
+        padding: 0.5rem;
+    }
+    
+    .dropdown-item {
+        padding: 0.5rem 1rem;
+        border-radius: 0.25rem;
+    }
+    
+    .dropdown-item:hover {
+        background-color: rgba(0,0,0,0.05);
+    }
+}
+
+/* Mobile Improvements */
+@media (max-width: 576px) {
+    .navbar-brand img {
+        max-height: 30px;
+    }
+    
+    .dropdown-menu {
+        min-width: 240px;
+        right: -50px;
+    }
+    
+    .btn-icon {
+        width: 34px;
+        height: 34px;
+    }
+    
+    .badge-count {
+        height: 16px;
+        width: 16px;
+        font-size: 0.6rem;
+    }
+}
+

@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- AOS CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" th:href="@{/css/user/all.css}">
+    <title>Contacto | JIMDUR Repuestos</title>
+
+</head>
+
+<body>
+    <!-- Navbar -->
+    <header th:replace="~{fragments/navbar :: navbar}"></header>
+    <main>
+        <!-- Hero Banner -->
+        <section class="bg-white text-dark mb-4 p-5">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <h1 class="display-4 fw-bold mb-3">Contáctanos</h1>
+                        <p class="lead mb-4">Estamos aquí para ayudarte. Ponte en contacto con nosotros para cualquier
+                            consulta, sugerencia o solicitud de información.</p>
+                    </div>
+                    <div class="col-lg-6 text-center">
+                        <img th:src="@{/image/contacto.jpg}" alt="Atención al cliente JIMDUR"
+                            class="img-fluid rounded shadow-lg">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Information -->
+        <section class="mb-4">
+            <div class="container">
+                <div class="row g-4">
+                    <!-- Contact Card 1 -->
+                    <div class="col-md-4">
+                        <div class="card h-100 border-0 shadow-sm text-center">
+                            <div class="card-body p-4">
+                                <div class="rounded-circle bg-white bg-opacity-10 p-3 d-inline-flex mb-3">
+                                    <i class="bi bi-geo-alt text-primary fs-1"></i>
+                                </div>
+                                <h3 class="card-title fw-bold">Visítanos</h3>
+                                <p class="card-text mb-0">Tienda Principal:</p>
+                                <p class="card-text mb-3">Av. Libertador 1234, Palermo, Buenos Aires</p>
+                                <p class="card-text mb-0">Centro de Distribución:</p>
+                                <p class="card-text">Ruta 9 Km 45, Escobar, Buenos Aires</p>
+                                <a href="#locations" class="btn btn-outline-primary mt-3">Ver todas las sucursales</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Card 2 -->
+                    <div class="col-md-4">
+                        <div class="card h-100 border-0 shadow-sm text-center">
+                            <div class="card-body p-4">
+                                <div class="rounded-circle bg-white bg-opacity-10 p-3 d-inline-flex mb-3">
+                                    <i class="bi bi-telephone text-primary fs-1"></i>
+                                </div>
+                                <h3 class="card-title fw-bold">Llámanos</h3>
+                                <p class="card-text mb-0">Atención al Cliente:</p>
+                                <p class="card-text mb-3">+54 11 1234-5678</p>
+                                <p class="card-text mb-0">Ventas Corporativas:</p>
+                                <p class="card-text mb-3">+54 11 5678-1234</p>
+                                <p class="card-text mb-0">Soporte Técnico:</p>
+                                <p class="card-text">+54 11 4321-8765</p>
+                                <p class="card-text text-muted small mt-3">Horario de atención: Lunes a Viernes de 9:00
+                                    a 18:00 y Sábados de 9:00 a 13:00</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Card 3 -->
+                    <div class="col-md-4">
+                        <div class="card h-100 border-0 shadow-sm text-center">
+                            <div class="card-body p-4">
+                                <div class="rounded-circle bg-white bg-opacity-10 p-3 d-inline-flex mb-3">
+                                    <i class="bi bi-envelope text-primary fs-1"></i>
+                                </div>
+                                <h3 class="card-title fw-bold">Escríbenos</h3>
+                                <p class="card-text mb-0">Información General:</p>
+                                <p class="card-text mb-3">info@jimdurrepuestos.com</p>
+                                <p class="card-text mb-0">Ventas:</p>
+                                <p class="card-text mb-3">ventas@jimdurrepuestos.com</p>
+                                <p class="card-text mb-0">Atención al Cliente:</p>
+                                <p class="card-text">clientes@jimdurrepuestos.com</p>
+                                <div class="d-flex justify-content-center gap-3 mt-3">
+                                    <a href="#" class="text-primary fs-4"><i class="bi bi-facebook"></i></a>
+                                    <a href="#" class="text-primary fs-4"><i class="bi bi-instagram"></i></a>
+                                    <a href="#" class="text-primary fs-4"><i class="bi bi-twitter"></i></a>
+                                    <a href="#" class="text-primary fs-4"><i class="bi bi-whatsapp"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Form and Map -->
+        <section class="mb-4 bg-light">
+            <div class="container">
+                <div class="row g-4">
+                    <!-- Contact Form -->
+                    <div class="col-lg-6">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-body p-4">
+                                <h2 class="fw-bold mb-4 text-uppercase text-center">Envíanos un <span
+                                        class="text-danger">mensaje</span></h2>
+                                <form id="contactForm">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label for="name" class="form-label">Nombre *</label>
+                                            <input type="text" class="form-control" id="name" name="name" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="email" class="form-label">Email *</label>
+                                            <input type="email" class="form-control" id="email" name="email" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="phone" class="form-label">Teléfono</label>
+                                            <input type="tel" class="form-control" id="phone" name="phone">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="subject" class="form-label">Asunto *</label>
+                                            <select class="form-select" id="subject" name="subject" required>
+                                                <option value="" selected disabled>Seleccionar...</option>
+                                                <option value="Consulta de Producto">Consulta de Producto</option>
+                                                <option value="Soporte Técnico">Soporte Técnico</option>
+                                                <option value="Seguimiento de Pedido">Seguimiento de Pedido</option>
+                                                <option value="Reclamo">Reclamo</option>
+                                                <option value="Sugerencia">Sugerencia</option>
+                                                <option value="Otro">Otro</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="message" class="form-label">Mensaje *</label>
+                                            <textarea class="form-control" id="message" name="message" rows="5"
+                                                required></textarea>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="privacyPolicy"
+                                                    name="privacyPolicy" required>
+                                                <label class="form-check-label" for="privacyPolicy">
+                                                    Acepto la <a href="#" target="_blank">política de privacidad</a> y
+                                                    el tratamiento de mis datos personales *
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Map -->
+                    <div class="col-lg-6">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-body p-4">
+                                <h2 class="fw-bold mb-4 text-uppercase text-center">Nuestra <span
+                                        class="text-danger">Ubicación</span></h2>
+                                <div class="mb-3">
+                                    <iframe class="w-100 h-100 rounded" th:src="${mapUrl}" allowfullscreen=""
+                                        loading="lazy">
+                                    </iframe>
+                                </div>
+                                <h5 class="fw-bold">Tienda Principal - Palermo</h5>
+                                <p class="mb-3">Av. Libertador 1234, Palermo, Buenos Aires</p>
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="bg-white bg-opacity-10 p-2 rounded me-3">
+                                        <i class="bi bi-clock text-primary"></i>
+                                    </div>
+                                    <div>
+                                        <p class="mb-0"><strong>Horario de Atención:</strong></p>
+                                        <p class="mb-0">Lunes a Viernes: 9:00 - 18:00</p>
+                                        <p class="mb-0">Sábados: 9:00 - 13:00</p>
+                                        <p class="mb-0">Domingos y Feriados: Cerrado</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-white bg-opacity-10 p-2 rounded me-3">
+                                        <i class="bi bi-info-circle text-primary"></i>
+                                    </div>
+                                    <div>
+                                        <p class="mb-0"><strong>Servicios disponibles:</strong></p>
+                                        <p class="mb-0">Venta de repuestos, Asesoramiento técnico, Taller de servicio
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="py-5 bg-light">
+            <div class="container">
+                <div class="card border-0 shadow-lg rounded-4">
+                    <div class="card-body p-md-5 p-4">
+                        <h2 class="text-center fw-bold mb-4 position-relative text-uppercase">
+                            <span class="position-relative">
+                                Preguntas <span class="text-danger">Frecuentes</span>
+                                <div class="position-absolute w-50 bg-danger"
+                                    style="height: 4px; bottom: -10px; left: 25%;"></div>
+                            </span>
+                        </h2>
+
+                        <p class="text-center text-muted mb-5">Encuentra respuestas rápidas a las consultas más comunes
+                            sobre nuestros servicios y productos</p>
+
+                        <!-- Search Bar -->
+                        <div class="mb-5 position-relative">
+                            <div class="input-group mb-3 shadow-sm">
+                                <span class="input-group-text bg-white border-end-0">
+                                    <i class="bi bi-search"></i>
+                                </span>
+                                <input type="text" id="faqSearch" class="form-control border-start-0 py-2"
+                                    placeholder="Buscar en preguntas frecuentes...">
+                            </div>
+                        </div>
+
+                        <!-- FAQ Categories -->
+                        <div class="d-flex justify-content-center mb-4 flex-wrap gap-2">
+                            <button class="btn btn-sm btn-outline-danger active px-3 rounded-pill"
+                                data-category="all">Todas</button>
+                            <button class="btn btn-sm btn-outline-danger px-3 rounded-pill"
+                                data-category="pagos">Pagos</button>
+                            <button class="btn btn-sm btn-outline-danger px-3 rounded-pill"
+                                data-category="envios">Envíos</button>
+                            <button class="btn btn-sm btn-outline-danger px-3 rounded-pill"
+                                data-category="devoluciones">Devoluciones</button>
+                            <button class="btn btn-sm btn-outline-danger px-3 rounded-pill"
+                                data-category="tecnico">Soporte Técnico</button>
+                        </div>
+
+                        <div class="accordion custom-accordion" id="faqAccordion">
+                            <!-- FAQ Item 1 -->
+                            <div class="accordion-item mb-3 border-0 rounded-3 shadow-sm overflow-hidden"
+                                data-category="pagos">
+                                <h3 class="accordion-header">
+                                    <button class="accordion-button fw-semibold collapsed py-3" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false"
+                                        aria-controls="collapseOne">
+                                        <i class="bi bi-credit-card me-2 text-danger"></i>
+                                        ¿Cuáles son los métodos de pago aceptados?
+                                    </button>
+                                </h3>
+                                <div id="collapseOne" class="accordion-collapse collapse"
+                                    data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body bg-white">
+                                        <p>En JIMDUR Repuestos aceptamos múltiples formas de pago para tu comodidad:</p>
+                                        <div class="row mt-3 g-3">
+                                            <div class="col-md-6">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="icon-wrapper bg-light p-2 rounded-circle me-3">
+                                                        <i class="bi bi-credit-card text-danger"></i>
+                                                    </div>
+                                                    <span>Tarjetas de crédito/débito (Visa, Mastercard, American
+                                                        Express)</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="icon-wrapper bg-light p-2 rounded-circle me-3">
+                                                        <i class="bi bi-bank text-danger"></i>
+                                                    </div>
+                                                    <span>Transferencia bancaria</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="icon-wrapper bg-light p-2 rounded-circle me-3">
+                                                        <i class="bi bi-phone text-danger"></i>
+                                                    </div>
+                                                    <span>Mercado Pago</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="icon-wrapper bg-light p-2 rounded-circle me-3">
+                                                        <i class="bi bi-cash text-danger"></i>
+                                                    </div>
+                                                    <span>Efectivo (solo en tiendas físicas)</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="icon-wrapper bg-light p-2 rounded-circle me-3">
+                                                        <i class="bi bi-calculator text-danger"></i>
+                                                    </div>
+                                                    <span>Pago en cuotas sin interés con tarjetas seleccionadas</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3 pt-2 border-top">
+                                            <a href="#" class="btn btn-sm btn-outline-danger">
+                                                <i class="bi bi-info-circle me-1"></i> Más información sobre pagos
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- FAQ Item 2 -->
+                            <div class="accordion-item mb-3 border-0 rounded-3 shadow-sm overflow-hidden"
+                                data-category="envios">
+                                <h3 class="accordion-header">
+                                    <button class="accordion-button fw-semibold collapsed py-3" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false"
+                                        aria-controls="collapseTwo">
+                                        <i class="bi bi-truck me-2 text-danger"></i>
+                                        ¿Cuál es la política de envíos y tiempos de entrega?
+                                    </button>
+                                </h3>
+                                <div id="collapseTwo" class="accordion-collapse collapse"
+                                    data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body bg-white">
+                                        <p>Nuestros tiempos de entrega varían según la ubicación:</p>
+                                        <div class="table-responsive mt-3">
+                                            <table class="table table-sm table-bordered">
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th>Ubicación</th>
+                                                        <th>Tiempo estimado</th>
+                                                        <th>Costo</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><i class="bi bi-geo-alt text-danger me-1"></i> CABA y GBA
+                                                        </td>
+                                                        <td>24-48 horas hábiles</td>
+                                                        <td><span class="badge bg-success">¡Gratis en compras
+                                                                +$15.000!</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><i class="bi bi-geo-alt text-danger me-1"></i> Capitales de
+                                                            provincia</td>
+                                                        <td>2-4 días hábiles</td>
+                                                        <td>Según peso y distancia</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><i class="bi bi-geo-alt text-danger me-1"></i> Resto del
+                                                            país</td>
+                                                        <td>3-7 días hábiles</td>
+                                                        <td>Según peso y distancia</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="alert alert-light mt-3 d-flex">
+                                            <i class="bi bi-info-circle-fill text-primary me-2 fs-5"></i>
+                                            <div>Los envíos se realizan a través de empresas de logística confiables y
+                                                puedes hacer seguimiento de tu pedido con el número de tracking que te
+                                                proporcionamos por email.</div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <a href="#" class="btn btn-sm btn-outline-danger">
+                                                <i class="bi bi-search me-1"></i> Seguimiento de pedido
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- FAQ Item 3 -->
+                            <div class="accordion-item mb-3 border-0 rounded-3 shadow-sm overflow-hidden"
+                                data-category="devoluciones">
+                                <h3 class="accordion-header">
+                                    <button class="accordion-button fw-semibold collapsed py-3" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false"
+                                        aria-controls="collapseThree">
+                                        <i class="bi bi-arrow-return-left me-2 text-danger"></i>
+                                        ¿Cuál es la política de devoluciones y garantía?
+                                    </button>
+                                </h3>
+                                <div id="collapseThree" class="accordion-collapse collapse"
+                                    data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body bg-white">
+                                        <div class="mb-3">
+                                            <div class="h6 text-danger mb-2"><i class="bi bi-shield-check me-1"></i>
+                                                Garantía de productos</div>
+                                            <p>Todos nuestros productos cuentan con garantía del fabricante.</p>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <div class="h6 text-danger mb-2"><i
+                                                    class="bi bi-arrow-return-left me-1"></i> Política de devoluciones
+                                            </div>
+                                            <ul class="list-unstyled">
+                                                <li class="mb-2 d-flex">
+                                                    <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
+                                                    <span>30 días para devoluciones por productos defectuosos o errores
+                                                        en el envío</span>
+                                                </li>
+                                                <li class="mb-2 d-flex">
+                                                    <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
+                                                    <span>Cambio inmediato o reembolso según tu preferencia</span>
+                                                </li>
+                                                <li class="mb-2 d-flex">
+                                                    <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
+                                                    <span>Para hacer efectiva la garantía, debes presentar la factura de
+                                                        compra</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="alert alert-light d-flex">
+                                            <i class="bi bi-exclamation-triangle-fill text-warning me-2 fs-5"></i>
+                                            <div>Para iniciar un proceso de devolución, comunícate con nuestro servicio
+                                                de atención al cliente.</div>
+                                        </div>
+
+                                        <div class="mt-3 d-flex gap-2">
+                                            <a href="#" class="btn btn-sm btn-outline-danger">
+                                                <i class="bi bi-download me-1"></i> Descargar política completa
+                                            </a>
+                                            <a href="#" class="btn btn-sm btn-danger">
+                                                <i class="bi bi-headset me-1"></i> Solicitar devolución
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- FAQ Item 4 -->
+                            <div class="accordion-item mb-3 border-0 rounded-3 shadow-sm overflow-hidden"
+                                data-category="tecnico">
+                                <h3 class="accordion-header">
+                                    <button class="accordion-button fw-semibold collapsed py-3" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false"
+                                        aria-controls="collapseFour">
+                                        <i class="bi bi-tools me-2 text-danger"></i>
+                                        ¿Ofrecen asesoramiento técnico para la instalación de repuestos?
+                                    </button>
+                                </h3>
+                                <div id="collapseFour" class="accordion-collapse collapse"
+                                    data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body bg-white">
+                                        <p>Sí, en JIMDUR Repuestos contamos con un equipo de técnicos especializados que
+                                            pueden brindarte asesoramiento para la instalación y uso de los repuestos
+                                            que adquieras.</p>
+
+                                        <div class="row g-3 mt-2">
+                                            <div class="col-md-6">
+                                                <div class="card h-100 border-0 shadow-sm">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title h6 d-flex align-items-center">
+                                                            <i class="bi bi-shop text-danger me-2"></i>
+                                                            Asesoramiento presencial
+                                                        </h5>
+                                                        <p class="card-text small">Visita cualquiera de nuestras tiendas
+                                                            y recibe ayuda personalizada de nuestros técnicos.</p>
+                                                        <a href="#" class="btn btn-sm btn-link text-danger p-0">Ver
+                                                            nuestras tiendas</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="card h-100 border-0 shadow-sm">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title h6 d-flex align-items-center">
+                                                            <i class="bi bi-telephone text-danger me-2"></i>
+                                                            Soporte telefónico
+                                                        </h5>
+                                                        <p class="card-text small">Llama a nuestro servicio técnico en
+                                                            horario comercial para resolver tus dudas.</p>
+                                                        <a href="tel:+5491145678900"
+                                                            class="btn btn-sm btn-link text-danger p-0">+54 9 11
+                                                            4567-8900</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="card h-100 border-0 shadow-sm">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title h6 d-flex align-items-center">
+                                                            <i class="bi bi-envelope text-danger me-2"></i>
+                                                            Soporte por email
+                                                        </h5>
+                                                        <p class="card-text small">Envía tu consulta y te responderemos
+                                                            en un máximo de 24 horas hábiles.</p>
+                                                        <a href="mailto:soporte@jimdurrepuestos.com"
+                                                            class="btn btn-sm btn-link text-danger p-0">soporte@jimdurrepuestos.com</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="card h-100 border-0 shadow-sm">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title h6 d-flex align-items-center">
+                                                            <i class="bi bi-youtube text-danger me-2"></i>
+                                                            Tutoriales en video
+                                                        </h5>
+                                                        <p class="card-text small">Revisa nuestra colección de
+                                                            tutoriales paso a paso para las reparaciones más comunes.
+                                                        </p>
+                                                        <a href="#" class="btn btn-sm btn-link text-danger p-0">Ver
+                                                            canal de YouTube</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- FAQ Item 5 -->
+                            <div class="accordion-item mb-3 border-0 rounded-3 shadow-sm overflow-hidden"
+                                data-category="tecnico">
+                                <h3 class="accordion-header">
+                                    <button class="accordion-button fw-semibold collapsed py-3" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false"
+                                        aria-controls="collapseFive">
+                                        <i class="bi bi-search me-2 text-danger"></i>
+                                        ¿Cómo puedo saber si un repuesto es compatible con mi moto?
+                                    </button>
+                                </h3>
+                                <div id="collapseFive" class="accordion-collapse collapse"
+                                    data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body bg-white">
+                                        <p>Para verificar la compatibilidad de un repuesto con tu moto, puedes:</p>
+
+                                        <div class="accordion mt-3" id="compatibilityAccordion">
+                                            <div class="accordion-item border-0 shadow-sm mb-2">
+                                                <h4 class="accordion-header">
+                                                    <button class="accordion-button collapsed py-2" type="button"
+                                                        data-bs-toggle="collapse" data-bs-target="#compatOne">
+                                                        <i class="bi bi-laptop me-2 text-danger"></i> Usar nuestro
+                                                        buscador online
+                                                    </button>
+                                                </h4>
+                                                <div id="compatOne" class="accordion-collapse collapse"
+                                                    data-bs-parent="#compatibilityAccordion">
+                                                    <div class="accordion-body">
+                                                        <p class="small">Utiliza nuestro buscador de repuestos por
+                                                            modelo de moto en la web. Solo selecciona marca, modelo y
+                                                            año para ver todos los repuestos compatibles.</p>
+                                                        <a href="#" class="btn btn-sm btn-outline-danger mt-2">
+                                                            <i class="bi bi-search me-1"></i> Ir al buscador
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="accordion-item border-0 shadow-sm mb-2">
+                                                <h4 class="accordion-header">
+                                                    <button class="accordion-button collapsed py-2" type="button"
+                                                        data-bs-toggle="collapse" data-bs-target="#compatTwo">
+                                                        <i class="bi bi-file-earmark-text me-2 text-danger"></i>
+                                                        Consultar especificaciones técnicas
+                                                    </button>
+                                                </h4>
+                                                <div id="compatTwo" class="accordion-collapse collapse"
+                                                    data-bs-parent="#compatibilityAccordion">
+                                                    <div class="accordion-body">
+                                                        <p class="small">Cada producto cuenta con una ficha técnica
+                                                            detallada donde se especifican todos los modelos
+                                                            compatibles. Revisa esta información antes de realizar tu
+                                                            compra.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="accordion-item border-0 shadow-sm mb-2">
+                                                <h4 class="accordion-header">
+                                                    <button class="accordion-button collapsed py-2" type="button"
+                                                        data-bs-toggle="collapse" data-bs-target="#compatThree">
+                                                        <i class="bi bi-headset me-2 text-danger"></i> Contactar a
+                                                        atención al cliente
+                                                    </button>
+                                                </h4>
+                                                <div id="compatThree" class="accordion-collapse collapse"
+                                                    data-bs-parent="#compatibilityAccordion">
+                                                    <div class="accordion-body">
+                                                        <p class="small">Nuestro equipo puede ayudarte a verificar la
+                                                            compatibilidad. Solo necesitamos conocer la marca, modelo y
+                                                            año de tu moto.</p>
+                                                        <div class="d-flex gap-2 mt-2">
+                                                            <a href="tel:+5491145678900"
+                                                                class="btn btn-sm btn-outline-danger">
+                                                                <i class="bi bi-telephone me-1"></i> Llamar
+                                                            </a>
+                                                            <a href="#" class="btn btn-sm btn-outline-danger">
+                                                                <i class="bi bi-chat-dots me-1"></i> Chat en vivo
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="accordion-item border-0 shadow-sm mb-2">
+                                                <h4 class="accordion-header">
+                                                    <button class="accordion-button collapsed py-2" type="button"
+                                                        data-bs-toggle="collapse" data-bs-target="#compatFour">
+                                                        <i class="bi bi-shop me-2 text-danger"></i> Visitar nuestras
+                                                        tiendas
+                                                    </button>
+                                                </h4>
+                                                <div id="compatFour" class="accordion-collapse collapse"
+                                                    data-bs-parent="#compatibilityAccordion">
+                                                    <div class="accordion-body">
+                                                        <p class="small">Acércate a cualquiera de nuestras tiendas con
+                                                            los datos de tu moto y nuestros asesores te ayudarán a
+                                                            encontrar el repuesto compatible.</p>
+                                                        <a href="#" class="btn btn-sm btn-outline-danger mt-2">
+                                                            <i class="bi bi-geo-alt me-1"></i> Ver tiendas
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="alert alert-warning mt-3 d-flex">
+                                            <i class="bi bi-exclamation-triangle-fill me-2 fs-5"></i>
+                                            <div>Recuerda que es importante verificar la compatibilidad antes de
+                                                realizar tu compra para evitar inconvenientes.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Contact and Chat Section -->
+                        <div class="mt-5 bg-light p-4 rounded-4 shadow-sm text-center">
+                            <h3 class="h5 mb-3">¿No encontraste respuesta a tu pregunta?</h3>
+                            <p class="text-muted mb-4">Nuestro equipo está listo para ayudarte con cualquier duda que
+                                tengas</p>
+
+                            <div class="d-flex justify-content-center gap-2 flex-wrap">
+                                <a href="#" class="btn btn-danger px-4 py-2 d-flex align-items-center"
+                                    data-bs-toggle="modal" data-bs-target="#contactModal">
+                                    <i class="bi bi-envelope-fill me-2"></i> Contáctanos
+                                </a>
+                                <a href="#" class="btn btn-outline-danger px-4 py-2 d-flex align-items-center">
+                                    <i class="bi bi-chat-dots-fill me-2"></i> Chat en vivo
+                                </a>
+                                <a href="#" class="btn btn-outline-secondary px-4 py-2 d-flex align-items-center">
+                                    <i class="bi bi-question-circle-fill me-2"></i> Ver todas las FAQs
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <style>
+                .custom-accordion .accordion-button:not(.collapsed) {
+                    background-color: rgba(220, 53, 69, 0.05);
+                    color: #dc3545;
+                    box-shadow: none;
+                }
+
+                .custom-accordion .accordion-button:focus {
+                    box-shadow: none;
+                    border-color: rgba(220, 53, 69, 0.5);
+                }
+
+                .custom-accordion .accordion-button::after {
+                    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23dc3545'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+                }
+
+                .icon-wrapper {
+                    width: 32px;
+                    height: 32px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                /* Animations */
+                .accordion-button:not(.collapsed) i {
+                    transform: scale(1.2);
+                    transition: transform 0.3s ease;
+                }
+
+                /* Hover effects */
+                .accordion-item {
+                    transition: transform 0.2s ease, box-shadow 0.2s ease;
+                }
+
+                .accordion-item:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .08) !important;
+                }
+
+                /* Search highlight */
+                .search-highlight {
+                    background-color: rgba(255, 230, 0, 0.3);
+                    border-radius: 2px;
+                    padding: 0 2px;
+                }
+            </style>
+        </section>
+
+
+        <!-- Call to Action -->
+        <section class="mt-2 bg-primary text-white">
+            <div class="container text-center py-4">
+                <h2 class="fw-bold mb-3">¿Necesitas ayuda inmediata?</h2>
+                <p class="lead mb-4">Nuestro equipo de atención al cliente está listo para asistirte</p>
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="tel:+541112345678" class="btn btn-light btn-lg">
+                        <i class="bi bi-telephone me-2"></i>Llámanos
+                    </a>
+                    <a href="https://wa.me/541112345678" class="btn btn-outline-light btn-lg">
+                        <i class="bi bi-whatsapp me-2"></i>WhatsApp
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Contact Modal -->
+    <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="contactModalLabel">Contacto Rápido</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="quickContactForm">
+                        <div class="mb-3">
+                            <label for="quickName" class="form-label">Nombre *</label>
+                            <input type="text" class="form-control" id="quickName" name="quickName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="quickEmail" class="form-label">Email *</label>
+                            <input type="email" class="form-control" id="quickEmail" name="quickEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="quickSubject" class="form-label">Asunto *</label>
+                            <input type="text" class="form-control" id="quickSubject" name="quickSubject" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="quickMessage" class="form-label">Mensaje *</label>
+                            <textarea class="form-control" id="quickMessage" name="quickMessage" rows="3"
+                                required></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" form="quickContactForm" class="btn btn-primary">Enviar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Category filtering
+            const categoryButtons = document.querySelectorAll('[data-category]');
+            const faqItems = document.querySelectorAll('.accordion-item[data-category]');
+
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Update active button
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+
+                    const category = button.getAttribute('data-category');
+
+                    // Show/hide items based on category
+                    faqItems.forEach(item => {
+                        if (category === 'all' || item.getAttribute('data-category') === category) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // Search functionality
+            const searchInput = document.getElementById('faqSearch');
+            if (searchInput) {
+                searchInput.addEventListener('input', function () {
+                    const searchTerm = this.value.toLowerCase().trim();
+
+                    // If search is empty, restore category filtering
+                    if (searchTerm === '') {
+                        const activeCategory = document.querySelector('[data-category].active').getAttribute('data-category');
+                        categoryButtons.forEach(btn => {
+                            if (btn.getAttribute('data-category') === activeCategory) {
+                                btn.click();
+                            }
+                        });
+                        return;
+                    }
+
+                    // Show all items for searching
+                    faqItems.forEach(item => {
+                        item.style.display = 'block';
+
+                        // Get question text and content
+                        const question = item.querySelector('.accordion-button').textContent.trim().toLowerCase();
+                        const content = item.querySelector('.accordion-body').textContent.trim().toLowerCase();
+
+                        // Check if search term is in question or content
+                        if (question.includes(searchTerm) || content.includes(searchTerm)) {
+                            item.style.display = 'block';
+
+                            // Expand the item if it contains search term
+                            if (searchTerm.length > 2) { // Only auto-expand for searches longer than 2 chars
+                                const collapseId = item.querySelector('.accordion-collapse').id;
+                                const collapseElement = document.getElementById(collapseId);
+                                const bsCollapse = new bootstrap.Collapse(collapseElement, { toggle: false });
+                                bsCollapse.show();
+                            }
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+
+                    // Reset category button active states during search
+                    if (searchTerm.length > 0) {
+                        categoryButtons.forEach(btn => btn.classList.remove('active'));
+                        document.querySelector('[data-category="all"]').classList.add('active');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

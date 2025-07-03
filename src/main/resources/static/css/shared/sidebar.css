@@ -1,0 +1,77 @@
+    .bg-gradient {
+        background: linear-gradient(145deg, #1a2032 0%, #2c3e50 100%);
+    }
+
+    .sidebar-container {
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .nav-link {
+        border-radius: 6px;
+        transition: all 0.3s ease;
+    }
+
+    .nav-link:hover:not(.active) {
+        background-color: #f1f1f1;
+        color: #212529 !important;
+        border-left: 3px solid #007bff;
+
+
+    }
+
+    .nav-pills .nav-link.active {
+        background-color: #f1f1f1;
+        color: #212529 !important;
+        border-left: 3px solid #007bff;
+        font-weight: 500;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .nav-pills .nav-link.sub-active {
+        background-color: #e9ecef;
+        /* Fondo gris más claro en hover */
+        color: #0056b3;
+        /* Color azul más oscuro en hover */
+        border-left: 3px solid #0056b3;
+        /* Cambio de borde al hacer hover */
+    }
+
+    .sidebar-header {
+        margin-bottom: 1rem;
+    }
+
+    .dropdown-menu {
+        border: none;
+        border-radius: 8px;
+    }
+
+    .dropdown-item {
+        padding: 0.5rem 1rem;
+        transition: all 0.2s;
+    }
+
+    .dropdown-item:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        transform: translateX(3px);
+    }
+
+    /* Para Chrome, Safari y Edge */
+    .sidebar-container::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+        /* Si tienes un scrollbar horizontal también */
+    }
+
+    /* Para la parte activa de la barra de desplazamiento */
+    .sidebar-container::-webkit-scrollbar-thumb {
+        background-color: rgba(255, 255, 255, 0);
+        /* Hacerla completamente transparente */
+        border-radius: 10px;
+        /* Bordes redondeados */
+    }
+
+    /* Para el fondo del scroll */
+    .sidebar-container::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        /* Color del fondo de la barra */
+    }
